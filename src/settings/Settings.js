@@ -167,7 +167,7 @@ export const SETTINGS = {
     "alwaysShowTimestamps": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Always show message timestamps'),
-        default: false,
+        default: true,
     },
     "autoplayGifsAndVideos": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -203,7 +203,7 @@ export const SETTINGS = {
     },
     "MessageComposerInput.isRichTextEnabled": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: false,
+        default: true,
     },
     "MessageComposer.showFormatting": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -233,7 +233,7 @@ export const SETTINGS = {
     },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: "light",
+        default: "dark",
         controller: new ThemeController(),
     },
     "webRtcAllowPeerToPeer": {
@@ -256,7 +256,7 @@ export const SETTINGS = {
     },
     "language": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: "en",
+        default: "ru",
     },
     "breadcrumb_rooms": {
         supportedLevels: ['account'],
@@ -269,7 +269,7 @@ export const SETTINGS = {
     },
     "showCookieBar": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: true,
+        default: false,
     },
     "autocompleteDelay": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,

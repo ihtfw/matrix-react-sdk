@@ -388,8 +388,9 @@ module.exports = React.createClass({
             // we won't try and convert it. Likewise, if the file size is unknown then we'll assume
             // it is too big. There is the risk of the reported file size and the actual file size
             // being different, however the user shouldn't normally run into this problem.
-            const fileTooBig = typeof(fileSize) === 'number' ? fileSize > 524288000 : true;
-
+            //const fileTooBig = typeof(fileSize) === 'number' ? fileSize > 524288000 : true;
+            downloadProps["download"] = fileName;
+            /*
             if (["application/pdf"].includes(fileType) && !fileTooBig) {
                 // We want to force a download on this type, so use an onClick handler.
                 downloadProps["onClick"] = (e) => {
@@ -416,7 +417,7 @@ module.exports = React.createClass({
             } else {
                 // Else we are hoping the browser will do the right thing
                 downloadProps["download"] = fileName;
-            }
+            }*/
 
             // If the attachment is not encrypted then we check whether we
             // are being displayed in the room timeline or in a list of

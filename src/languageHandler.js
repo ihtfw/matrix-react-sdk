@@ -295,8 +295,18 @@ export function getAllLanguagesFromJson() {
 }
 
 export function getLanguagesFromBrowser() {
-    if (navigator.languages && navigator.languages.length) return navigator.languages;
-    if (navigator.language) return [navigator.language];
+    if (navigator.languages && navigator.languages.length){
+        console.log("navigator.languages");
+        console.log(navigator.languages);
+        return navigator.languages;
+    }
+    if (navigator.language){        
+        console.log("navigator.language");
+        console.log(navigator.language);
+        return [navigator.language];
+    }   
+    console.log("navigator.userLanguage");
+    console.log(navigator.userLanguage);
     return [navigator.userLanguage || "en"];
 }
 

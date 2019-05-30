@@ -226,6 +226,8 @@ const LeftPanel = React.createClass({
 
         if (tagPanelEnabled) {
             tagPanelContainer = (<div className="mx_LeftPanel_tagPanelContainer">
+                <TopLeftMenuButton collapsed={ this.props.collapsed } />
+                    { breadcrumbs }
                 <TagPanel />
                 { isCustomTagsEnabled ? <CustomRoomTagPanel /> : undefined }
                 <TagPanelButtons />
@@ -257,8 +259,7 @@ const LeftPanel = React.createClass({
             <div className={containerClasses}>
                 { tagPanelContainer }
                 <aside className={"mx_LeftPanel dark-panel"} onKeyDown={ this._onKeyDown } onFocus={ this._onFocus } onBlur={ this._onBlur }>
-                    <TopLeftMenuButton collapsed={ this.props.collapsed } />
-                    { breadcrumbs }
+                    
                     { searchBox }
                     <CallPreview ConferenceHandler={VectorConferenceHandler} />
                     <RoomList

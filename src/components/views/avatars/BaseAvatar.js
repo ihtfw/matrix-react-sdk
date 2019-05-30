@@ -164,6 +164,36 @@ module.exports = React.createClass({
         const firstChar = name.substring(idx, idx+chars);
         return firstChar.toUpperCase();
     },
+    
+    /**
+     * returns the two first (non-sigil) character of 'name',
+     * converted to uppercase
+     */
+    _getInitialLetters: function(name) {
+        if (name.length < 1) {
+            return undefined;
+        }
+
+        let idx = 0;
+        const initial = name[0];
+        if ((initial === '@' || initial === '#' || initial === '+') && name[1]) {
+            idx++;
+        }
+
+        let chars = 2;
+        const first = name.charCodeAt(idx);
+
+        // check if it’s the start of a surrogate pair
+        if (first >= 0xD800 && first <= 0xDBFF && name[idx+1]) {
+            const second = name.charCodeAt(idx+1);
+            if (second >= 0xDC00 && second <= 0xDFFF) {
+                chars++;
+            }
+        }
+
+        const firstChar = name.substring(idx, idx+chars);
+        return firstChar.toUpperCase();
+    },
 
     render: function() {
         const EmojiText = sdk.getComponent('elements.EmojiText');
@@ -176,10 +206,10 @@ module.exports = React.createClass({
         } = this.props;
 
         if (imageUrl === this.state.defaultImageUrl) {
-            const initialLetter = this._getInitialLetter(name);
+            const initialLetter = this._getInitialLetters(name);
             const textNode = (
                 <EmojiText className="mx_BaseAvatar_initial" aria-hidden="true"
-                    style={{ fontSize: (width * 0.65) + "px",
+                    style={{ fontSize: (width * 0.5) + "px",
                     width: width + "px",
                     lineHeight: height + "px" }}
                 >

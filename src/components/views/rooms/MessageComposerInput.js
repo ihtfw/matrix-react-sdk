@@ -1005,7 +1005,7 @@ export default class MessageComposerInput extends React.Component {
 
     onPaste = (event: Event, change: Change, editor: Editor): Change => {
         const transfer = getEventTransfer(event);
-
+        console.trace(transfer.type)
         switch (transfer.type) {
             case 'files':
                 // This actually not so much for 'files' as such (at time of writing
@@ -1016,6 +1016,10 @@ export default class MessageComposerInput extends React.Component {
                     transfer.files, this.props.room.roomId, this.client,
                 );
             case 'html': {
+                return change.withoutMerging(() => {
+                    change.insertText(transfer.text);
+                });
+                /*
                 if (this.state.isRichTextEnabled) {
                     // FIXME: https://github.com/ianstormtaylor/slate/issues/1497 means
                     // that we will silently discard nested blocks (e.g. nested lists) :(
@@ -1030,7 +1034,7 @@ export default class MessageComposerInput extends React.Component {
                     return change.withoutMerging(() => {
                         change.insertText(transfer.text);
                     });
-                }
+                }*/
             }
             case 'text':
                 // don't skip/merge so that multiple consecutive pastes can be undone individually

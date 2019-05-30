@@ -80,6 +80,7 @@ export default class TopLeftMenuButton extends React.Component {
 
     render() {
         const name = this._getDisplayName();
+        
         let nameElement;
         if (!this.props.collapsed) {
             nameElement = <div className="mx_TopLeftMenuButton_name">

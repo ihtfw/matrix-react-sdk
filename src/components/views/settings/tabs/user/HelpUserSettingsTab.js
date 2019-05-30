@@ -172,9 +172,8 @@ export default class HelpUserSettingsTab extends React.Component {
         const reactSdkVersion = REACT_SDK_VERSION !== '<local>'
             ? ghVersionLabel('matrix-org/matrix-react-sdk', REACT_SDK_VERSION)
             : REACT_SDK_VERSION;
-        const vectorVersion = this.state.vectorVersion
-            ? ghVersionLabel('vector-im/riot-web', this.state.vectorVersion)
-            : 'unknown';
+
+        const vectorVersion = this.state.vectorVersion ? this.state.vectorVersion : 'unknown';
 
         let olmVersion = MatrixClientPeg.get().olmVersion;
         olmVersion = olmVersion ? `${olmVersion[0]}.${olmVersion[1]}.${olmVersion[2]}` : '<not-enabled>';

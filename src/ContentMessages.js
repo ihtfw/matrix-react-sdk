@@ -424,20 +424,8 @@ export default class ContentMessages {
             if (!shouldContinue) return;
         }
 
-        const UploadConfirmDialog = sdk.getComponent("dialogs.UploadConfirmDialog");
         for (let i = 0; i < okFiles.length; ++i) {
             const file = okFiles[i];
-            const shouldContinue = await new Promise((resolve) => {
-                Modal.createTrackedDialog('Upload Files confirmation', '', UploadConfirmDialog, {
-                    file,
-                    currentIndex: i,
-                    totalFiles: okFiles.length,
-                    onFinished: (shouldContinue) => {
-                        resolve(shouldContinue);
-                    },
-                });
-            });
-            if (!shouldContinue) break;
             this._sendContentToRoom(file, roomId, matrixClient);
         }
     }

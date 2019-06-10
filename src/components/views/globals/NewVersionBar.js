@@ -75,7 +75,7 @@ export default React.createClass({
         // we display the Changelog Dialog which takes two versions and
         // automatically tells you what's changed (provided the versions
         // are in the right format)
-        if (this.props.releaseNotes) {
+        /*if (this.props.releaseNotes) {
             action_button = (
                 <button className="mx_MatrixToolbar_action" onClick={this.displayReleaseNotes}>
                     { _t("What's new?") }
@@ -87,13 +87,14 @@ export default React.createClass({
                     { _t("What's new?") }
                 </button>
             );
-        } else if (PlatformPeg.get()) {
+        } else */if (PlatformPeg.get()) {
             action_button = (
                 <button className="mx_MatrixToolbar_action" onClick={this.onUpdateClicked}>
                     { _t("Update") }
                 </button>
             );
         }
+        
         return (
             <div className="mx_MatrixToolbar">
                 <img className="mx_MatrixToolbar_warning" src={require("../../../../res/img/warning.svg")} width="24" height="23" />

@@ -310,7 +310,7 @@ const RoomSubList = React.createClass({
                             scrollTop={this.state.scrollTop }
                             height={ this.state.scrollerHeight }
                             renderItem={ this.makeRoomTile }
-                            itemHeight={34}
+                            itemHeight={26}
                             items={ this.props.list } />
                     </IndicatorScrollbar>
                 </div>;

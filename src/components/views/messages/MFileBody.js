@@ -233,6 +233,11 @@ module.exports = React.createClass({
             linkText = content.body;
         }
 
+        //if it's image, let's add width and height
+        if (content.info && content.info.w && content.info.h) {
+            linkText += ' ' + content.info.w + 'x' + content.info.h;
+        }
+
         if (content.info && content.info.size) {
             // If we know the size of the file then add it as human readable
             // string to the end of the link text so that the user knows how
@@ -419,6 +424,10 @@ module.exports = React.createClass({
                 downloadProps["download"] = fileName;
             }*/
 
+
+            //console.warn('----------------------------')
+            //console.trace(content)
+
             // If the attachment is not encrypted then we check whether we
             // are being displayed in the room timeline or in a list of
             // files in the right hand side of the screen.
@@ -429,7 +438,7 @@ module.exports = React.createClass({
                             <a className="mx_MFileBody_downloadLink" {...downloadProps}>
                                 { fileName }
                             </a>
-                            <div className="mx_MImageBody_size">
+                            <div className="mx_MImageBody_size">                                
                                 { content.info && content.info.size ? filesize(content.info.size) : "" }
                             </div>
                         </div>

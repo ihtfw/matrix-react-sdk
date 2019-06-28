@@ -50,13 +50,13 @@ const LeftPanel = React.createClass({
         };
     },
 
-    componentWillMount: function() {
+    componentWillMount: function() {``
         this.focusedElement = null;
 
         this._settingWatchRef = SettingsStore.watchSetting(
-            "feature_room_breadcrumbs", null, this._onBreadcrumbsChanged);
+            "breadcrumbs", null, this._onBreadcrumbsChanged);
 
-        const useBreadcrumbs = SettingsStore.isFeatureEnabled("feature_room_breadcrumbs");
+        const useBreadcrumbs = !!SettingsStore.getValue("breadcrumbs");
         Analytics.setBreadcrumbs(useBreadcrumbs);
         this.setState({breadcrumbs: useBreadcrumbs});
     },
@@ -224,15 +224,31 @@ const LeftPanel = React.createClass({
 
         const isCustomTagsEnabled = SettingsStore.isFeatureEnabled("feature_custom_tags");
 
+
+        let breadcrumbs = (<RoomBreadcrumbs />);
+
+        tagPanelContainer = (<div className="mx_LeftPanel_tagPanelContainer">
+            <TopLeftMenuButton collapsed={ this.props.collapsed } />
+            { breadcrumbs }
+            <TagPanel />
+            { isCustomTagsEnabled ? <CustomRoomTagPanel /> : undefined }
+            <TagPanelButtons />
+        </div>);
+        /*
+
+        let breadcrumbs;
+        if (this.state.breadcrumbs) {
+            breadcrumbs = (<RoomBreadcrumbs collapsed={this.props.collapsed} />);
+        }
         if (tagPanelEnabled) {
             tagPanelContainer = (<div className="mx_LeftPanel_tagPanelContainer">
                 <TopLeftMenuButton collapsed={ this.props.collapsed } />
-                    { breadcrumbs }
+                { breadcrumbs }
                 <TagPanel />
                 { isCustomTagsEnabled ? <CustomRoomTagPanel /> : undefined }
                 <TagPanelButtons />
             </div>);
-        }
+        }*/
 
         const containerClasses = classNames(
             "mx_LeftPanel_container", "mx_fadable",
@@ -250,16 +266,11 @@ const LeftPanel = React.createClass({
             onCleared={ this.onSearchCleared }
             collapsed={this.props.collapsed} />);
 
-        let breadcrumbs;
-        if (this.state.breadcrumbs) {
-            breadcrumbs = (<RoomBreadcrumbs collapsed={this.props.collapsed} />);
-        }
 
         return (
             <div className={containerClasses}>
                 { tagPanelContainer }
-                <aside className={"mx_LeftPanel dark-panel"} onKeyDown={ this._onKeyDown } onFocus={ this._onFocus } onBlur={ this._onBlur }>
-                    
+                <aside className={"mx_LeftPanel dark-panel"} onKeyDown={ this._onKeyDown } onFocus={ this._onFocus } onBlur={ this._onBlur }>                    
                     { searchBox }
                     <CallPreview ConferenceHandler={VectorConferenceHandler} />
                     <RoomList

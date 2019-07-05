@@ -487,6 +487,18 @@ export default React.createClass({
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
 
+        if (!this.state.version && PlatformPeg.get()){
+            PlatformPeg.get().getAppVersion().then((ver) => {
+                if (ver)
+                {
+                    console.log('Version! ' + ver);
+                    this.setState({version: ver});
+                }
+            }).catch((e) => {
+                console.error("Error getting vector version: ", e);
+            });
+        }
+
         // Start the onboarding process for certain actions
         if (MatrixClientPeg.get() && MatrixClientPeg.get().isGuest() &&
             ONBOARDING_FLOW_STARTERS.includes(payload.action)
@@ -1794,6 +1806,8 @@ export default React.createClass({
             newVersionReleaseNotes: releaseNotes,
             checkingForUpdate: null,
         });
+
+        this._setPageSubtitle(subtitle);
     },
 
     onSendEvent: function(roomId, event) {
@@ -1811,7 +1825,11 @@ export default React.createClass({
     },
 
     _setPageSubtitle: function(subtitle='') {
-        document.title = `${SdkConfig.get().brand || 'Riot'} ${subtitle}`;
+        let title = `${SdkConfig.get().brand || 'Riot'} ${subtitle}`;
+        if (this.state.version){
+            title = title + ' ' + this.state.version;
+        }
+        document.title = title;
     },
 
     updateStatusIndicator: function(state, prevState) {

@@ -177,6 +177,8 @@ export default React.createClass({
             newVersionReleaseNotes: null,
             checkingForUpdate: null,
 
+            platform: null,
+
             showCookieBar: false,
 
             // Parameters used in the registration dance with the IS
@@ -488,6 +490,7 @@ export default React.createClass({
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
 
         if (!this.state.version && PlatformPeg.get()){
+            
             PlatformPeg.get().getAppVersion().then((ver) => {
                 if (ver)
                 {
@@ -496,6 +499,25 @@ export default React.createClass({
                 }
             }).catch((e) => {
                 console.error("Error getting vector version: ", e);
+            });
+        }
+
+        if (!this.state.platform && PlatformPeg.get() && PlatformPeg.get().getUpdateFeedUrl){
+            PlatformPeg.get().getUpdateFeedUrl().then((feedUrl) => {
+                if (feedUrl)
+                {
+                    console.log('FeedUrl! ' + feedUrl);
+
+                    if (feedUrl.includes('ia32') || feedUrl.includes('x86')){
+                        this.setState({platform: 'x86'});
+                    }else if (feedUrl.includes('x64')){
+                        this.setState({platform: 'x64'});
+                    }else if (feedUrl.includes('macos')){
+                        this.setState({platform: 'Mac'});
+                    }
+                }
+            }).catch((e) => {
+                console.error("Error getting vector platform: ", e);
             });
         }
 
@@ -1826,9 +1848,15 @@ export default React.createClass({
 
     _setPageSubtitle: function(subtitle='') {
         let title = `${SdkConfig.get().brand || 'Riot'} ${subtitle}`;
+        
+        if (this.state.platform){
+            title += ' ' + this.state.platform
+        }
+
         if (this.state.version){
             title = title + ' ' + this.state.version;
         }
+
         document.title = title;
     },
 

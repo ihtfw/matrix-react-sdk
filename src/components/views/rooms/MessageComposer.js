@@ -210,7 +210,7 @@ export default class MessageComposer extends React.Component {
             inputState: {
                 marks: [],
                 blockType: null,
-                isRichTextEnabled: SettingsStore.getValue('MessageComposerInput.isRichTextEnabled'),
+                isRichTextEnabled: true,
             },
             showFormatting: SettingsStore.getValue('MessageComposer.showFormatting'),
             isQuoting: Boolean(RoomViewStore.getQuotingEvent()),

@@ -498,7 +498,7 @@ export default React.createClass({
                     this.setState({version: ver});
                 }
             }).catch((e) => {
-                console.error("Error getting vector version: ", e);
+                //console.error("Error getting vector version: ", e);
             });
         }
 
@@ -517,7 +517,7 @@ export default React.createClass({
                     }
                 }
             }).catch((e) => {
-                console.error("Error getting vector platform: ", e);
+                //console.error("Error getting vector platform: ", e);
             });
         }
 

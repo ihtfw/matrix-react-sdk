@@ -149,7 +149,7 @@ export default class MessageComposerInput extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        const isRichTextEnabled = SettingsStore.getValue('MessageComposerInput.isRichTextEnabled');
+        const isRichTextEnabled = true;
 
         Analytics.setRichtextMode(isRichTextEnabled);
 
@@ -757,8 +757,6 @@ export default class MessageComposerInput extends React.Component {
 
         if (isOnlyCtrlOrCmdKeyEvent(ev)) {
             const ctrlCmdCommand = {
-                // C-m => Toggles between rich text and markdown modes
-                [KeyCode.KEY_M]: 'toggle-mode',
                 [KeyCode.KEY_B]: 'bold',
                 [KeyCode.KEY_I]: 'italic',
                 [KeyCode.KEY_U]: 'underlined',
@@ -839,10 +837,6 @@ export default class MessageComposerInput extends React.Component {
     };
 
     handleKeyCommand = (command: string): boolean => {
-        if (command === 'toggle-mode') {
-            this.enableRichtext(!this.state.isRichTextEnabled);
-            return true;
-        }
 
         //const newState: ?Value = null;
 

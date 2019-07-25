@@ -196,6 +196,10 @@ module.exports = React.createClass({
                 const charCode = name.charCodeAt(i);
                 if (charCode == 32) //space
                 {
+                    if (name.length > 0 && onlyDigits){
+                        //for something like '12 test' => '12'
+                        break;
+                    }
                     continue;
                 }
     

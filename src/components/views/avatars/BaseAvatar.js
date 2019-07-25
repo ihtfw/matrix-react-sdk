@@ -166,7 +166,7 @@ module.exports = React.createClass({
     },
     
     /**
-     * returns the two first (non-sigil) character of 'name',
+     * returns the two (non-sigil) first character of 'name' or 3 if they are digits,
      * converted to uppercase
      */
     _getInitialLetters: function(name) {
@@ -180,19 +180,54 @@ module.exports = React.createClass({
             idx++;
         }
 
-        let chars = 2;
-        const first = name.charCodeAt(idx);
+        let onlyDigits = true;
+        let result = '';
+        let surrogateChars = 0;
 
+        for(let i = idx; i < name.length; i++){
+            if (this._isSurrogatePair(name, i)){
+                //it's emoji
+                result += name.substring(i, i + 2);
+
+                surrogateChars++;
+                i++;
+                onlyDigits = false;
+            }else{
+                const charCode = name.charCodeAt(i);
+                if (charCode == 32) //space
+                {
+                    continue;
+                }
+    
+                onlyDigits = onlyDigits && (charCode > 47 && charCode < 58); // '0' = 48 and '9' = 57
+    
+                result += name[i];
+            }
+
+            if (result.length > 1 + surrogateChars && !onlyDigits){
+                //for non digits only two chars
+                break;
+            }
+
+            if (result.length > 2 + surrogateChars){
+                break;
+            }
+        }
+        
+        return result.toUpperCase();
+    },
+
+    _isSurrogatePair(name, idx){
+        const first = name.charCodeAt(idx);
         // check if it’s the start of a surrogate pair
         if (first >= 0xD800 && first <= 0xDBFF && name[idx+1]) {
             const second = name.charCodeAt(idx+1);
             if (second >= 0xDC00 && second <= 0xDFFF) {
-                chars++;
+                return true;
             }
         }
 
-        const firstChar = name.substring(idx, idx+chars);
-        return firstChar.toUpperCase();
+        return false;
     },
 
     render: function() {
